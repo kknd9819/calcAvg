@@ -53,11 +53,11 @@
 					&times;
 				</button>
 				<h4 class="modal-title" id="myModalLabel">
-					模态框（Modal）标题
+					
 				</h4>
 			</div>
-			<div class="modal-body">
-				在这里添加一些文本
+			<div id="model_content" class="modal-body">
+				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -78,48 +78,61 @@
     $(document).ready(function(){
     	
     	var total = 0;
+    	var topStudents = "";
   
     	$("#add").click(function(){
     		 total ++ ;
     		 $("#add").before('<div class="row"><div class="form-group">'+
     				 '<label class="col-lg-1">姓名：</label>'+
     				 '<div class="col-lg-4">'+
-    				 '<input class="form-control" type="text" placeholder="请输入同学姓名" name="name['+ total +"] "+
+    				 '<input class="form-control" type="text" placeholder="请输入同学姓名" name="name['+ total +']" '+
     				 'required="required"/></div>'+
     				 '<label class="col-lg-1">成绩：</label>'+
     				 '<div class="col-lg-4">'+
-    				 '<input class="form-control" type="number" placeholder="请输入考试成绩" name="score['+ total + "] "+
-    				 'required="required"/></div></div></div>');
+    				 '<input class="form-control" type="number" placeholder="请输入考试成绩" name="score['+ total +']" '+
+    				 'required="required"/></div></div><a href="javascript:;">删除</a></div>');
+    		//删除
+    	    	$(".row a").click(function(){
+    	    		$(this).parent().remove();
+    	    	});
     	});
     	
-    	//提交
-    	$("#submit").click(function(){
-				
-    			var students = [];
-    			
-    			for(var i=0;i<total;i++){
-    				var student = new Object();
-    				student.name = name[i];
-    				student.score = score[i];
-    				students.push(student);
-    			}
-    			
-    			$.ajax(
-    					type: 'POST',
-    					url:"/calc", 
-    					data:{students:JSON.stringify(students)},
-    					dataType:"json",
-    					success:function(result){
-    							$("#myModalLabel").text("平均分数为：" + result.);
-    			    			$("div").html(result);
-    			  			};
-    	});
     	
     	//重置
     	$("#reset").click(function(){
     		window.location.reload();
     	});
     	
+    	
+    	
+    	//提交
+    	$("#submit").click(function(){
+    			
+    			var students = [];
+    			
+    			for(var i=0;i<=total;i++){
+    				var student = new Object();
+    				student.name = $("[name='name[" + i +"]']").val();
+    				student.score = $("[name='score[" + i +"]']").val();
+    				students.push(student);
+    			}
+    			
+    			$.ajax({
+    					type: 'POST',
+    					url:"/calc", 
+    					async:"true",
+    					data:{students:JSON.stringify(students)},
+    					dataType:"json",
+    					success:function(result){
+    							$("#myModalLabel").text("平均分数为：" + result.avg);
+    							for(var i=0;i<result.students.length;i++){
+    								topStudents += result.students[i].name + ",";
+    							}
+    							$("#model_content").html("超过平均分的同学有：" + topStudents);
+    			  			}
+    			});
+    	
+    });
     });
     </script>
 </body>

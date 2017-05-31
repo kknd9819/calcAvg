@@ -11,6 +11,9 @@ public class TestAvgApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		
 	}
+	
+	
 
 }
