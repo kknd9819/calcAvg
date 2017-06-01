@@ -7,6 +7,7 @@
     <title>计算平均分数和高分同学</title>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/bootstrap_button.css" rel="stylesheet"/>
+    <script src="js/jquery.min.js"></script>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
     <style type="text/css">
@@ -77,7 +78,6 @@
 	
 	
  </div>
-	<script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/messages_zh.js"></script>
